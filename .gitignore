@@ -57,4 +57,4 @@ build/
 Thumbs.db
 
 # 排除resources目录
-/src/main/resources/
+application-local.properties
