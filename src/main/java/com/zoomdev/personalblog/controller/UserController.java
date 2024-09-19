@@ -1,6 +1,6 @@
 package com.zoomdev.personalblog.controller;
 
-import com.zoomdev.personalblog.model.entity.User;
+import com.zoomdev.personalblog.model.dto.UserDTO;
 import com.zoomdev.personalblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable long id){
+    public UserDTO getUserById(@PathVariable long id){
         return userService.getUserById(id);
     }
 }

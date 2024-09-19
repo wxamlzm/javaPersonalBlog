@@ -1,8 +1,8 @@
 package com.zoomdev.personalblog.service;
 
-import com.zoomdev.personalblog.model.entity.User;
+import com.zoomdev.personalblog.model.dto.UserDTO;
 
 public interface UserService {
-    User getUserById(long id);
+    UserDTO getUserById(long id);
 
 }
