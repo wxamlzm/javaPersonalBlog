@@ -1,5 +1,6 @@
 package com.zoomdev.personalblog.controller;
 
+import com.zoomdev.personalblog.Response;
 import com.zoomdev.personalblog.model.dto.UserDTO;
 import com.zoomdev.personalblog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/user/{id}")
-    public UserDTO getUserById(@PathVariable long id){
-        return userService.getUserById(id);
+    public Response<UserDTO> getUserById(@PathVariable long id) {
+        return Response.newSuccess(userService.getUserById(id));
     }
 }
