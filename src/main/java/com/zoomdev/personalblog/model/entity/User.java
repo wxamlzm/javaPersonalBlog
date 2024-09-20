@@ -6,18 +6,18 @@ import javax.persistence.*;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
     @Id
-    @Column(name="id")
-    @GeneratedValue(strategy=IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = IDENTITY)
     private long id;
 
-    @Column(name="username")
+    @Column(name = "username")
     private String name;
 
-    @Column(name="password")
+    @Column(name = "password")
     private String password;
 
     public long getId() {

@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public UserDTO getUserById(long id){
-        User user = userRepository.findById(id).orElseThrow(()-> new RuntimeException());
+    public UserDTO getUserById(long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
         return UserConverter.convertUser(user);
     }
 }
