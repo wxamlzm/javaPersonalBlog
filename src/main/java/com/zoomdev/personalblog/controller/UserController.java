@@ -14,7 +14,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/users/{id}")
     public Response<UserDTO> getUserById(@PathVariable long id) {
         return Response.newSuccess(userService.getUserById(id));
     }
