@@ -7,7 +7,7 @@ public class UserConverter {
     public static UserDTO convertUser(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
-        userDTO.setUsername(user.getName());
+        userDTO.setUsername(user.getUsername());
         return userDTO;
     }
 }

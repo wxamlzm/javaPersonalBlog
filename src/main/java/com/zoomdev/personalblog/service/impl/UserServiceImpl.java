@@ -19,4 +19,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException());
         return UserConverter.convertUser(user);
     }
+
+    @Override
+    public UserDTO getUserByUsername(String username){
+        User user = userRepository.findByUsername(username);
+            if(user == null){
+                throw new RuntimeException("User not found width username: " + username);
+            }
+            return UserConverter.convertUser(user);
+        }
 }
