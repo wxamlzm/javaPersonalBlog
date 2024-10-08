@@ -13,6 +13,10 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = IDENTITY)
     private long id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "password")
+    private String password;
 
     public String getUsername() {
         return username;
@@ -21,12 +25,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
 
     public long getId() {
         return id;
