@@ -1,4 +1,4 @@
-package com.zoomdev.personalblog.controller;
+package com.zoomdev.personalblog.controller.auth;
 
 import com.zoomdev.personalblog.controller.auth.BaseAuthController;
 import com.zoomdev.personalblog.model.dto.JwtRequest;
