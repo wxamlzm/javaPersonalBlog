@@ -3,6 +3,7 @@ package com.zoomdev.personalblog.security;
 import com.zoomdev.personalblog.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,9 +25,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Value("${app.security.jwt.enabled:true}")
+    private boolean jwtEnabled;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
+
+        if(!jwtEnabled) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         final String requestTokenHeader = request.getHeader("Authorization");
 
         String username = null;
