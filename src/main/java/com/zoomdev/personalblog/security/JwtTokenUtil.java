@@ -66,4 +66,20 @@ public class JwtTokenUtil {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token)) ;
     }
+
+    // 刷新token
+    public String refreshToken(String token){
+        final Date createdDate = new Date();
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        final Claims claims = getAllClaimsFromToken(token);
+        claims.setIssuedAt(createdDate);
+        claims.setExpiration(expirationDate);
+
+        return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+
+    private Date calculateExpirationDate(Date createdDate){
+        return new Date(createdDate.getTime() + JWT_TOKEN_VALIDITY_SECONDS * 1000);
+    }
 }

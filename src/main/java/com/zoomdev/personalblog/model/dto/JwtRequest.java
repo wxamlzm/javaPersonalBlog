@@ -7,6 +7,7 @@ public class JwtRequest implements Serializable {
 
     private String username;
     private String password;
+    private String token;
 
     //    需要默认构造函数 for JSON Parsing
     public JwtRequest() {
@@ -36,5 +37,13 @@ public class JwtRequest implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

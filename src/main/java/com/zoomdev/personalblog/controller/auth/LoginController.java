@@ -3,6 +3,8 @@ package com.zoomdev.personalblog.controller.auth;
 import com.zoomdev.personalblog.controller.auth.BaseAuthController;
 import com.zoomdev.personalblog.model.dto.JwtRequest;
 import com.zoomdev.personalblog.model.dto.JwtResponse;
+import com.zoomdev.personalblog.security.AuthenticationStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController extends BaseAuthController {
+    @Autowired
+    private AuthenticationStrategy authenticationStrategy;
+
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception{
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
