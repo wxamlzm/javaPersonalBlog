@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BaseAuthController {
-    @Autowired
-    protected AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     protected JwtTokenUtil jwtTokenUtil;

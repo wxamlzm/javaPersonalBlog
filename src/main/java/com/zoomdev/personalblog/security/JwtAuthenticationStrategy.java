@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 @Component("jwtAuthenticationStrategy")
 public class JwtAuthenticationStrategy implements AuthenticationStrategy {
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private  AuthenticationManager authenticationManager;
+
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
