@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO createUser(CreateUserDTO createUserDTO){
-        if(!createUserDTO.getPassword().equals(createUserDTO.getConfirmPassword())){
+    public UserDTO createUser(CreateUserDTO createUserDTO) {
+        if (!createUserDTO.getPassword().equals(createUserDTO.getConfirmPassword())) {
             throw new IllegalArgumentException("Password do not match");
         }
 

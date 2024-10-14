@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Component;
 
 @Component("jwtAuthenticationStrategy")
-public class JwtAuthenticationStrategy implements AuthenticationStrategy{
+public class JwtAuthenticationStrategy implements AuthenticationStrategy {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
@@ -27,10 +27,10 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy{
     private JwtRequestFilter jwtRequestFilter;
 
     @Override
-    public Response<?> authenticate(JwtRequest authRequest) throws Exception{
-        if(authRequest.getToken() != null && !authRequest.getToken().isEmpty()){
+    public Response<?> authenticate(JwtRequest authRequest) throws Exception {
+        if (authRequest.getToken() != null && !authRequest.getToken().isEmpty()) {
             return validateToken(authRequest.getToken());
-        }else {
+        } else {
             return authenticateWithCredentials(authRequest.getUsername(), authRequest.getPassword());
         }
     }
@@ -48,23 +48,21 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy{
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
-    private Response<?> authenticateWithCredentials(String username, String password) throws Exception{
+    private Response<?> authenticateWithCredentials(String username, String password) throws Exception {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String token = jwtTokenUtil.generateToken(userDetails);
         return Response.newSuccess(new JwtAuthenticationData(token));
     }
 
-
-
-    private Response<?> validateToken(String token){
+    private Response<?> validateToken(String token) {
         String username = jwtTokenUtil.getUsernameFromToken(token);
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-        if(jwtTokenUtil.validateToken(token,userDetails)){
+        if (jwtTokenUtil.validateToken(token, userDetails)) {
             String newToken = jwtTokenUtil.refreshToken(token);
             return Response.newSuccess(new JwtAuthenticationData(newToken));
-        }else {
+        } else {
             return Response.newFail("Invalid token");
         }
     }

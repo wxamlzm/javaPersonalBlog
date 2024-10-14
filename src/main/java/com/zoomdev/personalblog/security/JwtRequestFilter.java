@@ -32,7 +32,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        if(!jwtEnabled) {
+        if (!jwtEnabled) {
             chain.doFilter(request, response);
             return;
         }
