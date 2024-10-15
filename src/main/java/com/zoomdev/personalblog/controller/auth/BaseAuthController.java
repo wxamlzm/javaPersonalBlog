@@ -1,8 +1,12 @@
 package com.zoomdev.personalblog.controller.auth;
 
+import com.zoomdev.personalblog.Response;
+import com.zoomdev.personalblog.model.dto.JwtRequest;
+import com.zoomdev.personalblog.security.AuthenticationStrategy;
 import com.zoomdev.personalblog.security.JwtTokenUtil;
 import com.zoomdev.personalblog.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -20,6 +24,9 @@ public class BaseAuthController {
     @Autowired
     protected JwtUserDetailsService userDetailsService;
 
+    @Autowired
+    protected AuthenticationStrategy authenticationStrategy;
+
     protected void authenticate(String username, String password) throws Exception {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -32,5 +39,10 @@ public class BaseAuthController {
 
     protected String generateToken(UserDetails userDetails) {
         return jwtTokenUtil.generateToken(userDetails);
+    }
+
+    protected ResponseEntity<Response<?>> authenticateInternal(JwtRequest authRequest) throws Exception{
+        Response<?> response = authenticationStrategy.authenticate(authRequest);
+        return ResponseEntity.ok(response);
     }
 }
