@@ -16,16 +16,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BaseAuthController {
-    private AuthenticationManager authenticationManager;
-
     @Autowired
     protected JwtTokenUtil jwtTokenUtil;
-
     @Autowired
     protected JwtUserDetailsService userDetailsService;
-
     @Autowired
     protected AuthenticationStrategy authenticationStrategy;
+    private AuthenticationManager authenticationManager;
 
     protected void authenticate(String username, String password) throws Exception {
         try {
@@ -41,7 +38,7 @@ public class BaseAuthController {
         return jwtTokenUtil.generateToken(userDetails);
     }
 
-    protected ResponseEntity<Response<?>> authenticateInternal(JwtRequest authRequest) throws Exception{
+    protected ResponseEntity<Response<?>> authenticateInternal(JwtRequest authRequest) throws Exception {
         Response<?> response = authenticationStrategy.authenticate(authRequest);
         return ResponseEntity.ok(response);
     }

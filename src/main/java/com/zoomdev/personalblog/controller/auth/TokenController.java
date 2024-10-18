@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-public class TokenController extends BaseAuthController{
+public class TokenController extends BaseAuthController {
 
     @PostMapping("verify")
-    public ResponseEntity<Response<?>> verifyToken(@RequestBody JwtRequest tokenRequest) throws Exception{
+    public ResponseEntity<Response<?>> verifyToken(@RequestBody JwtRequest tokenRequest) throws Exception {
         return authenticateInternal(tokenRequest);
     }
 }

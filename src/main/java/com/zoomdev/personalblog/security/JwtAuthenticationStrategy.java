@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 @Component("jwtAuthenticationStrategy")
 public class JwtAuthenticationStrategy implements AuthenticationStrategy {
-    private  AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -31,13 +31,13 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy {
     @Override
     public Response<?> authenticate(JwtRequest authRequest) throws Exception {
         // 添加参数验证
-        if(authRequest == null){
+        if (authRequest == null) {
             return Response.newFail("Authentication request cannot be null");
         }
 
-        if(StringUtils.isNotBlank(authRequest.getToken())){
+        if (StringUtils.isNotBlank(authRequest.getToken())) {
             return validateToken(authRequest.getToken());
-        }else if (StringUtils.isNotBlank(authRequest.getUsername()) && StringUtils.isNotBlank(authRequest.getPassword())) {
+        } else if (StringUtils.isNotBlank(authRequest.getUsername()) && StringUtils.isNotBlank(authRequest.getPassword())) {
             return authenticateWithCredentials(authRequest.getUsername(), authRequest.getPassword());
         } else {
             return Response.newFail("Invalid authentication request. Provide either a token or username and password");
@@ -59,7 +59,7 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy {
 
     private Response<?> authenticateWithCredentials(String username, String password) throws Exception {
         // 添加额外的参数验证
-        if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+        if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
             return Response.newFail("Username and password must nott be blank");
         }
 
@@ -68,14 +68,14 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy {
             final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             final String token = jwtTokenUtil.generateToken(userDetails);
             return Response.newSuccess(new JwtAuthenticationData(token));
-        }catch(AuthenticationException e){
+        } catch (AuthenticationException e) {
             // 记录错误日志
             return Response.newFail("Authentication failed");
         }
     }
 
     private Response<?> validateToken(String token) {
-        if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
             return Response.newFail("Token must not be blank");
         }
 
@@ -89,7 +89,7 @@ public class JwtAuthenticationStrategy implements AuthenticationStrategy {
             } else {
                 return Response.newFail("Invalid token");
             }
-        }catch( Exception e ){
+        } catch (Exception e) {
             // 记录错误日志
             return Response.newFail("Token validation failed");
         }
