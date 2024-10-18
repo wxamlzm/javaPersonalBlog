@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequestMapping("/api/auth")
 public class LoginController extends BaseAuthController {
 
     @PostMapping("/login")
-    public ResponseEntity<Response<?>> login(@RequestBody JwtRequest loginRequest) throws Exception{
+    public ResponseEntity<Response<?>> login(@Valid @RequestBody JwtRequest loginRequest) throws Exception{
         return authenticateInternal(loginRequest);
     }
 }

@@ -1,11 +1,14 @@
 package com.zoomdev.personalblog.model.dto;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 public class JwtRequest implements Serializable {
     private static final long serialVersionUID = 5926468583005150707L;
 
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
     private String token;
 
