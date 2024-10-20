@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,13 +20,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${app.security.jwt.enabled:true}") // 从配置文件中读取JWT启动状态，默认为true
     private boolean jwtEnabled;
 
-    @Autowired
-    @Qualifier("jwtAuthenticationStrategy")
-    private AuthenticationStrategy jwtAuthenticationStrategy;
+    private final AuthenticationStrategy jwtAuthenticationStrategy;
+    private final AuthenticationStrategy noAuthenticationStrategy;
 
     @Autowired
-    @Qualifier("noAuthenticationStrategy")
-    private AuthenticationStrategy noAuthenticationStrategy;
+    public SecurityConfig(
+            @Lazy @Qualifier("jwtAuthenticationStrategy") AuthenticationStrategy jwtAuthenticationStrategy,
+            @Qualifier("noAuthenticationStrategy") AuthenticationStrategy noAuthenticationStrategy) {
+        this.jwtAuthenticationStrategy = jwtAuthenticationStrategy;
+        this.noAuthenticationStrategy = noAuthenticationStrategy;
+    }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
@@ -44,4 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
 }

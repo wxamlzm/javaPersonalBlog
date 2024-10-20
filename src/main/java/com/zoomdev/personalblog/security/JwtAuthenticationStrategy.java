@@ -17,16 +17,24 @@ import org.springframework.stereotype.Component;
 
 @Component("jwtAuthenticationStrategy")
 public class JwtAuthenticationStrategy implements AuthenticationStrategy {
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
+    public JwtAuthenticationStrategy(AuthenticationManager authenticationManager,
+                                     UserDetailsService userDetailsService,
+                                     JwtTokenUtil jwtTokenUtil,
+                                     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                                     JwtRequestFilter jwtRequestFilter) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
+        this.jwtRequestFilter = jwtRequestFilter;
+    }
 
     @Override
     public Response<?> authenticate(JwtRequest authRequest) throws Exception {
