@@ -1,6 +1,7 @@
 package com.zoomdev.personalblog.config;
 
 import com.zoomdev.personalblog.security.AuthenticationStrategy;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // 返回自定义的PasswordEncoder实现
+        return new PasswordEncoder(){
+            @Override
+            public String encode(CharSequence rawPassword){
+                // 使用SHA256进行加密
+                return DigestUtils.sha256Hex(rawPassword.toString());
+            }
+
+            @Override
+            public boolean matches(CharSequence rawPassword, String encodedPassword){
+                // 验证密码
+                return encodedPassword.equals(DigestUtils.sha256Hex(rawPassword.toString()));
+            }
+        };
     }
 
     @Bean
