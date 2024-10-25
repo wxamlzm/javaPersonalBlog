@@ -48,20 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // 返回自定义的PasswordEncoder实现
-        return new PasswordEncoder(){
-            @Override
-            public String encode(CharSequence rawPassword){
-                // 使用SHA256进行加密
-                return DigestUtils.sha256Hex(rawPassword.toString());
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword){
-                // 验证密码
-                return encodedPassword.equals(DigestUtils.sha256Hex(rawPassword.toString()));
-            }
-        };
+        // 使用BcryptPasswordEncoder 替代SHA256
+        return new BCryptPasswordEncoder(12);
     }
 
     @Bean
