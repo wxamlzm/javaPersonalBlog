@@ -13,8 +13,7 @@ public class CreateUserDTO {
     @NotBlank
     private String password;
 
-    @NotBlank
-    private String confirmPassword;
+
 
     public String getUsername() {
         return username;
@@ -40,11 +39,5 @@ public class CreateUserDTO {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
 
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 }
